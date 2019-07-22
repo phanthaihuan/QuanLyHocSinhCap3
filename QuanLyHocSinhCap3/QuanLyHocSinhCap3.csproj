@@ -59,7 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes.cs" />
+    <Compile Include="Class.cs" />
     <Compile Include="EntityState.cs" />
     <Compile Include="fClasses.cs">
       <SubType>Form</SubType>

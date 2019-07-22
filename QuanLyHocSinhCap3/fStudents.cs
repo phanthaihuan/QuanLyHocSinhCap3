@@ -29,7 +29,7 @@ namespace QuanLyHocSinhCap3
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     pic.Image = Image.FromFile(ofd.FileName);
-                    Student obj = studentsBindingSource.Current as Student;
+                    Student obj = studentBindingSource.Current as Student;
                     if (obj != null)
                         obj.ImageUrl = ofd.FileName;
                 }
@@ -56,7 +56,11 @@ namespace QuanLyHocSinhCap3
                 {
                     if (db.State == ConnectionState.Closed)
                         db.Open();
-                    studentsBindingSource.DataSource = db.Query<Student>("select * from Students", commandType: CommandType.Text);
+                    studentBindingSource.DataSource = db.Query<Student>("select * from Students", commandType: CommandType.Text);
+
+                    //Load classes'name to combobox cboClass
+                    classBindingSource.DataSource = db.Query<Class>("select * from Classes", commandType: CommandType.Text);
+
                     pContainer.Enabled = false;
                     //pContainer.Enabled = true;
                 }
@@ -72,15 +76,15 @@ namespace QuanLyHocSinhCap3
             objState = EntityState.Added;
             pic.Image = null;
             pContainer.Enabled = true;
-            studentsBindingSource.Add(new Student());
-            studentsBindingSource.MoveLast();
+            studentBindingSource.Add(new Student());
+            studentBindingSource.MoveLast();
             txtStudentCode.Focus();
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             pContainer.Enabled = false;
-            studentsBindingSource.ResetBindings(false);
+            studentBindingSource.ResetBindings(false);
             ClearInput();
         }
 
@@ -95,7 +99,7 @@ namespace QuanLyHocSinhCap3
         {
             try
             {
-                Student obj = studentsBindingSource.Current as Student;
+                Student obj = studentBindingSource.Current as Student;
                 if (obj != null)
                 {
                     if (!string.IsNullOrEmpty(obj.ImageUrl))
@@ -116,7 +120,7 @@ namespace QuanLyHocSinhCap3
             {
                 try
                 {
-                    Student obj = studentsBindingSource.Current as Student;
+                    Student obj = studentBindingSource.Current as Student;
                     if (obj != null)
                     {
                         using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
@@ -127,7 +131,7 @@ namespace QuanLyHocSinhCap3
                             int result = db.Execute("sp_Students_Delete", new { StudentID = obj.StudentID }, commandType: CommandType.StoredProcedure);
                             if (result != 0)
                             {
-                                studentsBindingSource.RemoveCurrent();
+                                studentBindingSource.RemoveCurrent();
                                 pContainer.Enabled = false;
                                 pic.Image = null;
                                 objState = EntityState.Unchanged;
@@ -147,8 +151,8 @@ namespace QuanLyHocSinhCap3
         {
             try
             {
-                studentsBindingSource.EndEdit();
-                Student obj = studentsBindingSource.Current as Student;
+                studentBindingSource.EndEdit();
+                Student obj = studentBindingSource.Current as Student;
                 if (obj != null)
                 {
                     using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
