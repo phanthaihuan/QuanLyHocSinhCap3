@@ -34,15 +34,16 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.metroGrid = new MetroFramework.Controls.MetroGrid();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
-            this.studentBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.studentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.metroGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.studentsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // metroGrid
             // 
             this.metroGrid.AllowUserToResizeRows = false;
             this.metroGrid.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.metroGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.metroGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.metroGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -94,9 +95,9 @@
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel1.VerticalScrollbarSize = 10;
             // 
-            // studentBindingSource
+            // studentsBindingSource
             // 
-            this.studentBindingSource.DataSource = typeof(QuanLyHocSinhCap3.Student);
+            this.studentsBindingSource.DataSource = typeof(QuanLyHocSinhCap3.Student);
             // 
             // fClasses
             // 
@@ -108,7 +109,7 @@
             this.Name = "fClasses";
             this.Text = "fClasses";
             ((System.ComponentModel.ISupportInitialize)(this.metroGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.studentsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -117,6 +118,6 @@
 
         private MetroFramework.Controls.MetroGrid metroGrid;
         private MetroFramework.Controls.MetroPanel metroPanel1;
-        private System.Windows.Forms.BindingSource studentBindingSource;
+        private System.Windows.Forms.BindingSource studentsBindingSource;
     }
 }
