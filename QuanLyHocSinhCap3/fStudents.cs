@@ -153,6 +153,10 @@ namespace QuanLyHocSinhCap3
             {
                 studentBindingSource.EndEdit();
                 Student obj = studentBindingSource.Current as Student;
+                
+                // Create a Class's object 
+                Class objc = classBindingSource.Current as Class;
+
                 if (obj != null)
                 {
                     using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
@@ -163,13 +167,19 @@ namespace QuanLyHocSinhCap3
                         {
                             DynamicParameters p = new DynamicParameters();
                             p.Add("@StudentID", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                            p.AddDynamicParams(new { StudentCode = obj.StudentCode, StudentName = obj.StudentName, Birthday = obj.Birthday, Gender = obj.Gender, Email = obj.Email, Address = obj.Address, ImageUrl = obj.ImageUrl, ClassID = obj.ClassID, EnrolledScore = obj.EnrolledScore });
+
+                            //Show "StudentID" to Input Form.
+                            // Will code later.
+
+                            //p.AddDynamicParams(new { StudentCode = obj.StudentCode, StudentName = obj.StudentName, Birthday = obj.Birthday, Gender = obj.Gender, Email = obj.Email, Address = obj.Address, ImageUrl = obj.ImageUrl, ClassID = obj.ClassID, EnrolledScore = obj.EnrolledScore });
+                            p.AddDynamicParams(new { StudentCode = obj.StudentCode, StudentName = obj.StudentName, Birthday = obj.Birthday, Gender = obj.Gender, Email = obj.Email, Address = obj.Address, ImageUrl = obj.ImageUrl, ClassID = objc.ClassID, EnrolledScore = obj.EnrolledScore });
                             db.Execute("sp_Students_Insert", p, commandType: CommandType.StoredProcedure);
                             obj.StudentID = p.Get<int>("@StudentID");
                         }
                         else if (objState == EntityState.Changed)
                         {
-                            db.Execute("sp_Students_Update", new { StudentID = obj.StudentID, StudentCode = obj.StudentCode, StudentName = obj.StudentName, Birthday = obj.Birthday, Gender = obj.Gender, Email = obj.Email, Address = obj.Address, ImageUrl = obj.ImageUrl, ClassID = obj.ClassID, EnrolledScore = obj.EnrolledScore }, commandType: CommandType.StoredProcedure);
+                            //db.Execute("sp_Students_Update", new { StudentID = obj.StudentID, StudentCode = obj.StudentCode, StudentName = obj.StudentName, Birthday = obj.Birthday, Gender = obj.Gender, Email = obj.Email, Address = obj.Address, ImageUrl = obj.ImageUrl, ClassID = obj.ClassID, EnrolledScore = obj.EnrolledScore }, commandType: CommandType.StoredProcedure);
+                            db.Execute("sp_Students_Update", new { StudentID = obj.StudentID, StudentCode = obj.StudentCode, StudentName = obj.StudentName, Birthday = obj.Birthday, Gender = obj.Gender, Email = obj.Email, Address = obj.Address, ImageUrl = obj.ImageUrl, ClassID = cboClass.SelectedValue, EnrolledScore = obj.EnrolledScore }, commandType: CommandType.StoredProcedure);
                         }
                         metroGrid.Refresh();
                         pContainer.Enabled = false;
