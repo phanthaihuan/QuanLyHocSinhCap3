@@ -14,10 +14,10 @@ using Dapper;
 
 namespace QuanLyHocSinhCap3
 {
-    public partial class Form1 : MetroFramework.Forms.MetroForm
+    public partial class fStudents : MetroFramework.Forms.MetroForm
     {
         EntityState objState = EntityState.Unchanged;
-        public Form1()
+        public fStudents()
         {
             InitializeComponent();
         }
@@ -58,6 +58,7 @@ namespace QuanLyHocSinhCap3
                         db.Open();
                     studentBindingSource.DataSource = db.Query<Student>("select * from Students", commandType: CommandType.Text);
                     pContainer.Enabled = false;
+                    //pContainer.Enabled = true;
                 }
             }
             catch (Exception ex)
@@ -176,6 +177,11 @@ namespace QuanLyHocSinhCap3
             {
                 MetroFramework.MetroMessageBox.Show(this, ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void BtnRefresh_Click(object sender, EventArgs e)
+        {
+            metroGrid.Refresh();
         }
     }
 }
