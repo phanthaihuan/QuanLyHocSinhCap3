@@ -14,7 +14,7 @@ namespace ns_Huan
     public static class HUAN
     {
         public static string connectionString = "Data Source=113.161.72.212,1434;Initial Catalog=h;User ID=h;Password=h;";
-        
+
         public static void ShowSqlException(string connectionString)
         {
             string queryString = "EXECUTE NonExistantStoredProcedure";
@@ -60,14 +60,14 @@ namespace ns_Huan
             }
             finally
             {
-                
+
             }
         }
 
 
         // SqlConnection
         // try using catch;;
-        
+
 
         // This function displays Sql Error Message: 23/07/2019
         // https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlexception?redirectedfrom=MSDN&view=netframework-4.8

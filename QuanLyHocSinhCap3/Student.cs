@@ -15,7 +15,7 @@ namespace ns_Huan
         public string Birthday { get; set; }
         public string Gender { get; set; }
         public string Email { get; set; }
-        public string Address { get; set; }
+        public string StudentAddress { get; set; }
         public string ImageUrl { get; set; }
         public int ClassID { get; set; }
         public string EnrolledScore { get; set; }
