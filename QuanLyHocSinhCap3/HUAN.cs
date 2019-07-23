@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace ns_Huan
 {
@@ -43,6 +44,33 @@ namespace ns_Huan
             }
         }
 
+        // Get Table
+        public static DataTable GetDataTable(string strsql)
+        {
+            try
+            {
+                DataTable dataTable = new DataTable();
+                using (var sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+                {
+                    sqlConnection.Open();
+                    SqlDataAdapter sqlDataAdapter = null;
+                    using (sqlDataAdapter = new SqlDataAdapter(strsql, sqlConnection))
+                    {
+                        sqlDataAdapter.Fill(dataTable);
+                    }
+                }
+                    return dataTable;
+            }
+            catch(SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                
+            }
+        }
+       
         // Test DB Connection
         public static void TestConnection()
         {

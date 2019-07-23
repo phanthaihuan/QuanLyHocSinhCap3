@@ -61,10 +61,11 @@ namespace ns_Huan
                     //String strSql = String.Format(@"select * from Students left join Classes on Students.ClassID=Classes.ClassID");
                     //String strSql = String.Format(@"select * from Students;");
                     //SqlCommand sqlCommand = new SqlCommand();
-                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(strSql, sqlConnection);
+                    //SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(strSql, sqlConnection);
                     DataTable dataTable = new DataTable();
                     dataTable.Clear();
-                    sqlDataAdapter.Fill(dataTable);
+                    //sqlDataAdapter.Fill(dataTable);
+                    dataTable = HUAN.GetDataTable(strSql);
                     metroGrid.DataSource = dataTable;
                 }
             }
