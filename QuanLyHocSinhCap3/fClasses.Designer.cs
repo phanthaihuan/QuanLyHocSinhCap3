@@ -1,6 +1,6 @@
 ﻿namespace QuanLyHocSinhCap3
 {
-    partial class fClasses
+    partial class fClass
     {
         /// <summary>
         /// Required designer variable.
