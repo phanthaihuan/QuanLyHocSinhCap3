@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace QuanLyHocSinhCap3
 {
-    public partial class fClasses : MetroFramework.Forms.MetroForm
+    public partial class fClass : MetroFramework.Forms.MetroForm
     {
-        public fClasses()
+        public fClass()
         {
             InitializeComponent();
         }
