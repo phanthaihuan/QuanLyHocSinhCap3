@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Fill_datagridview_with_two_Tables
+namespace Huan
 {
     static class Program
     {
