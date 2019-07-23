@@ -14,10 +14,10 @@ using Dapper;
 
 namespace QuanLyHocSinhCap3
 {
-    public partial class fStudent : MetroFramework.Forms.MetroForm
+    public partial class fStudents : MetroFramework.Forms.MetroForm
     {
         EntityState objState = EntityState.Unchanged;
-        public fStudent()
+        public fStudents()
         {
             InitializeComponent();
         }
