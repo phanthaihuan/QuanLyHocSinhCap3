@@ -97,7 +97,7 @@
             // 
             // studentsBindingSource
             // 
-            this.studentsBindingSource.DataSource = typeof(QuanLyHocSinhCap3.Student);
+            this.studentsBindingSource.DataSource = typeof(ns_Huan.Student);
             // 
             // fClasses
             // 

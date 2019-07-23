@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using Dapper;
 
-namespace QuanLyHocSinhCap3
+namespace ns_Huan
 {
     public partial class fStudent : MetroFramework.Forms.MetroForm
     {

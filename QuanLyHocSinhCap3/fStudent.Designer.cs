@@ -1,4 +1,4 @@
-﻿namespace QuanLyHocSinhCap3
+﻿namespace ns_Huan
 {
     partial class fStudent
     {
@@ -216,7 +216,7 @@
             // 
             // studentBindingSource
             // 
-            this.studentBindingSource.DataSource = typeof(QuanLyHocSinhCap3.Student);
+            this.studentBindingSource.DataSource = typeof(ns_Huan.Student);
             // 
             // pContainer
             // 

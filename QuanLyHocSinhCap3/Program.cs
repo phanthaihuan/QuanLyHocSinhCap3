@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Huan
+namespace ns_Huan
 {
     static class Program
     {

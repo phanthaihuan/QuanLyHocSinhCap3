@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuanLyHocSinhCap3
+namespace ns_Huan
 {
     public enum EntityState
     {
