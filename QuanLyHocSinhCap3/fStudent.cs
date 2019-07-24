@@ -16,7 +16,7 @@ namespace ns_Huan
 {
     public partial class fStudent : MetroFramework.Forms.MetroForm
     {
-        //EntityState objState = EntityState.Unchanged;
+        EntityState objState = EntityState.Unchanged;
         public fStudent()
         {
             InitializeComponent();
@@ -42,10 +42,9 @@ namespace ns_Huan
             txtBirthday.Text = null;
             chkGender.CheckState = CheckState.Unchecked;
             txtEmail.Text = null;
-            txtAddress.Text = null;
             txtClassID.Text = null;
             pic.Image = null;
-            txtEnrolledScore = null;
+            txtEnrolledScore.Text = null;
         }
 
         // Load data to metroGrid
@@ -57,15 +56,13 @@ namespace ns_Huan
                 {
                     if (sqlConnection.State == ConnectionState.Closed)
                         sqlConnection.Open();
-                    String strSql = String.Format(@"select Students.StudentID as 'Mã ID', Students.StudentCode as 'Mã học sinh', Students.StudentName as 'Tên học sinh', Students.Birthday as 'Ngày sinh', Students.Gender as 'Giới tính', Students.StudentAddress as 'Địa chỉ', Students.EnrolledScore as 'Điểm đầu vào', Classes.ClassDesc as 'Tên lớp' from Students left join Classes on Students.ClassID=Classes.ClassID");
-                    //String strSql = String.Format(@"select * from Students left join Classes on Students.ClassID=Classes.ClassID");
-                    //String strSql = String.Format(@"select * from Students;");
-                    //SqlCommand sqlCommand = new SqlCommand();
-                    //SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(strSql, sqlConnection);
+                    String strSql = String.Format(@"select Students.StudentID as 'Mã ID', Students.StudentCode as 'Mã học sinh', Students.StudentName as 'Tên học sinh', Students.Birthday as 'Ngày sinh', Students.Gender as 'Giới tính', Students.StudentAddress as 'Địa chỉ', Students.Email, Students.EnrolledScore as 'Điểm đầu vào', Classroom.ClassDesc as 'Tên lớp' from Students left join Classroom on Students.ClassID=Classroom.ClassID");
+
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(strSql, sqlConnection);
                     DataTable dataTable = new DataTable();
                     dataTable.Clear();
-                    //sqlDataAdapter.Fill(dataTable);
-                    dataTable = HUAN.GetDataTable(strSql);
+                    sqlDataAdapter.Fill(dataTable);
+
                     metroGrid.DataSource = dataTable;
                 }
             }
@@ -221,10 +218,7 @@ namespace ns_Huan
         //    }
         //}
 
-        private void BtnRefresh_Click(object sender, EventArgs e)
-        {
-            metroGrid.Refresh();
-        }
+
 
         private void BtnExit_Click(object sender, EventArgs e)
         {
@@ -234,6 +228,91 @@ namespace ns_Huan
         private void FStudent_Load(object sender, EventArgs e)
         {
             LoadDataToGrid();
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var con = new SqlConnection(HUAN.strConnectionString))
+                {
+                    if (con.State == ConnectionState.Closed)
+                        con.Open();
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandType = CommandType.Text;
+                    // Get the index row of the current record
+                    int rIndex = metroGrid.CurrentCell.RowIndex;
+
+                    // Get the StudentID of the current record
+                    String strStudentID = metroGrid.Rows[rIndex].Cells[0].Value.ToString();
+
+                    // Make a sql statement to delete the record
+                    String sql = String.Format(@"DELETE FROM Students WHERE StudentID = {0};", strStudentID);
+                    cmd.CommandText = sql;
+                    cmd.CommandType = CommandType.Text;
+
+                    // Run a statement
+                    cmd.Connection = con;
+                    cmd.ExecuteNonQuery();
+                    LoadDataToGrid();
+                }
+            }
+            catch (SqlException ex)
+            {
+                HUAN.ShowSqlException(ex);
+            }
+        }
+
+        private void BtnRefresh_Click(object sender, EventArgs e)
+        {
+            LoadDataToGrid();
+        }
+
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            ClearInput();
+            objState = EntityState.Added;
+            pic.Image = null;
+            pContainer.Enabled = true;
+            this.txtStudentCode.Focus();
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            if (objState == EntityState.Added)
+                try
+                {
+                    using (var con = new SqlConnection(HUAN.strConnectionString))
+                    {
+                        SqlCommand cmd = new SqlCommand();
+                        cmd.Connection = con;
+                        if (con.State == ConnectionState.Closed)
+                            con.Open();
+                        cmd.CommandType = CommandType.Text;
+
+                        // Build sql string
+                        String sql = String.Format(@"INSERT INTO Students (StudentCode, StudentName, Birthday, Gender, Email, StudentAddress, ImageUrl, ClassID, EnrolledScore) VALUES (@StudentCode, @StudentName, @Birthday, @Gender, @Email, @StudentAddress, @ImageUrl, @ClassID, @EnrolledScore)");
+
+                        // Pass values to Parameters
+                        cmd.Parameters.AddWithValue("@StudentCode", this.txtStudentCode.ToString());
+                        cmd.Parameters.AddWithValue("@StudentName", this.txtStudentName.ToString());
+                        cmd.Parameters.AddWithValue("@Birthday", this.txtBirthday.ToString());
+                        cmd.Parameters.AddWithValue("@Gender", "");
+                        cmd.Parameters.AddWithValue("@Email", this.txtEmail.ToString());
+                        cmd.Parameters.AddWithValue("@StudentAddress", this.txtStudentAddress.ToString());
+                        cmd.Parameters.AddWithValue("@ImageUrl", "xxx");
+                        cmd.Parameters.AddWithValue("@ClassID", this.txtClassID.ToString());
+                        cmd.Parameters.AddWithValue("@EnrolledScore", this.txtEnrolledScore.ToString());
+                        cmd.CommandText = sql;
+                        // Insert values to database
+                        cmd.ExecuteNonQuery();
+
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    HUAN.ShowSqlException(ex);
+                }
         }
     }
 }

@@ -14,8 +14,8 @@ namespace ns_Huan
 {
     public static class HUAN
     {
-        public static string connectionString = "Data Source=113.161.72.212,1434;Initial Catalog=h;User ID=h;Password=h;";
-
+        //public static string connectionString = "Data Source=113.161.72.212,1434;Initial Catalog=h;User ID=h;Password=h;";
+        public static string strConnectionString = ConfigurationManager.ConnectionStrings["cn"].ConnectionString;
         public static void ShowSqlException(string connectionString)
         {
             string queryString = "EXECUTE NonExistantStoredProcedure";
@@ -76,7 +76,7 @@ namespace ns_Huan
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(strConnectionString))
                 {
                     connection.Open();
                     MessageBox.Show("Connection to database is done!");
