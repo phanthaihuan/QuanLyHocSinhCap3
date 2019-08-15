@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace ns_Huan
 {
     public static class HUAN
     {
-        public static string connectionString = "Data Source=113.161.72.212,1434;Initial Catalog=h;User ID=h;Password=h;";
-        
+        //public static string connectionString = "Data Source=113.161.72.212,1434;Initial Catalog=h;User ID=h;Password=h;";
+        public static string strConnectionString = ConfigurationManager.ConnectionStrings["cn"].ConnectionString;
         public static void ShowSqlException(string connectionString)
         {
             string queryString = "EXECUTE NonExistantStoredProcedure";
@@ -43,12 +44,39 @@ namespace ns_Huan
             }
         }
 
+        // Get Table
+        public static DataTable GetDataTable(string strsql)
+        {
+            try
+            {
+                DataTable dataTable = new DataTable();
+                using (var sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+                {
+                    sqlConnection.Open();
+                    SqlDataAdapter sqlDataAdapter = null;
+                    using (sqlDataAdapter = new SqlDataAdapter(strsql, sqlConnection))
+                    {
+                        sqlDataAdapter.Fill(dataTable);
+                    }
+                }
+                    return dataTable;
+            }
+            catch(SqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                
+            }
+        }
+       
         // Test DB Connection
         public static void TestConnection()
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(strConnectionString))
                 {
                     connection.Open();
                     MessageBox.Show("Connection to database is done!");
@@ -60,14 +88,14 @@ namespace ns_Huan
             }
             finally
             {
-                
+
             }
         }
 
 
         // SqlConnection
         // try using catch;;
-        
+
 
         // This function displays Sql Error Message: 23/07/2019
         // https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlexception?redirectedfrom=MSDN&view=netframework-4.8
